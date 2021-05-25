@@ -60,10 +60,21 @@ public class StringCalculator
         var negativeNumbers = string.Join(",", convertedNumbers.Where(x => x < 0).Select(x => x.ToString()).ToArray());
         throw new FormatException($"negatives not allowed '{negativeNumbers}'");
     }
+   
+    
+    private static IList<string> GetCustomDelimiter(string numbers)
+    {
+        var allDelimiters = numbers.Substring(StartIndexOfCustomDelimiter, numbers.IndexOf('\n') - StartIndexOfCustomDelimiter);
 
+        var splitDelimiters = allDelimiters.Split('[').Select(x => x.TrimEnd(']')).ToList();
 
+        if (splitDelimiters.Contains(string.Empty))
+        {
+            splitDelimiters.Remove(string.Empty);
+        }
 
-
+        return splitDelimiters;
+    }
 
 }  
 
@@ -73,6 +84,7 @@ class Main{
     Scanner input = new Scanner(System.in);
     string inputOfString = input.nextString();
     StringCalculator object = new StringCalculator();
-    object.Add(inputOfString);   
+    object.Add(inputOfString);
+    object.CustomDelimiterIdentifier(inputOfString); 
    }
 }
