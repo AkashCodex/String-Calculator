@@ -42,6 +42,29 @@ public class StringCalculator
     }
 
 
+    private int AssignCustomDelimiterAndReturnStartIndexOfNumbers(string numbers)
+    {
+        var customDelimiters = GetCustomDelimiter(numbers);
+        _defaultDelimiters.AddRange(customDelimiters);
+
+        var hasMultipleDelimiters = customDelimiters.Count > 1;
+        var multipleDelimiterLength = hasMultipleDelimiters ? (customDelimiters.Count * 2) : 0;
+
+        return StartIndexOfNumbersWithCustomDelimiter + customDelimiters.Sum(x => x.Length) + multipleDelimiterLength;
+    }
+
+    private static void ValidateNumbersArePositive(IReadOnlyCollection<int> convertedNumbers)
+    {
+        if (!convertedNumbers.Any(x => x < 0)) return;
+
+        var negativeNumbers = string.Join(",", convertedNumbers.Where(x => x < 0).Select(x => x.ToString()).ToArray());
+        throw new FormatException($"negatives not allowed '{negativeNumbers}'");
+    }
+
+
+
+
+
 }  
 
 
