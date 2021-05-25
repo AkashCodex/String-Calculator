@@ -33,6 +33,15 @@ public class StringCalculator
     }
 
 
+    private string GetNumbersExcludingCustomDelimiter(string numbers)
+    {
+        var startIndexOfString = AssignCustomDelimiterAndReturnStartIndexOfNumbers(numbers);
+
+        numbers = numbers.Substring(startIndexOfString);
+        return numbers;
+    }
+
+
 }  
 
 
